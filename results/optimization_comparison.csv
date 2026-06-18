@@ -1,0 +1,3 @@
+algorithm,thickness_mm,width_mm,arm_length_mm,fillet_radius_mm,predicted_stress_MPa,predicted_mass_kg,factor_of_safety,optimization_time_sec,generations
+Genetic Algorithm,7.583,36.943,40.028,9.898,124.899,0.1508,2.002,5.361,60
+Bayesian Optimization,9.441,30.015,40.078,4.282,124.921,0.1668,2.001,1.806,150
