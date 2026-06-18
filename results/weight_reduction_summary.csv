@@ -1,0 +1,4 @@
+Design,Mass (kg),Weight Reduction (%)
+Baseline (Median Safe Design),0.3561,0.0
+GA Optimized,0.1508,57.65
+Bayesian Optimized,0.1668,53.16
