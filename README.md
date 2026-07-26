@@ -1,7 +1,7 @@
 # Comparative Evaluation of AIML-Based Generative Design Algorithms for Lightweight Mechanical Structure Optimization
 
 **M.Tech Dissertation Project | BITS Pilani WILP (AIMLCZG628T)**
-Author: Gowtham G (2024AA05864) · Domain: Artificial Intelligence & Machine Learning · Component: L-Bracket Structural Optimization
+Author: Gowtham G (2024AA05864) · Domain: Artificial Intelligence & Machine Learning · Component: L-Bracket Structural Optimization 
 
 ---
 
@@ -146,6 +146,12 @@ python notebooks/final_comparison_plots.py
 - Manuscript preparation for submission to a peer-reviewed journal (target: *Results in Engineering*, Elsevier)
 
 ---
+
+## Upcoming Work
+- Increase dataset to 5000 samples
+- Add SVR comparison
+- Perform 5-fold cross-validation
+- Validate optimized designs using FEA
 
 ## Author
 
