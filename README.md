@@ -149,9 +149,11 @@ python notebooks/final_comparison_plots.py
 
 ## Upcoming Work
 - Increase dataset to 5000 samples
+- Learning curve
 - Add SVR comparison
 - Perform 5-fold cross-validation
 - Validate optimized designs using FEA
+- 3D Printing of Parts
 
 ## Author
 
