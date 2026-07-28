@@ -3,3 +3,5 @@ stress,Random Forest,0.9618,26.911,55.1991,2.459
 mass,Random Forest,0.9953,0.0081,0.0121,2.537
 stress,XGBoost,0.9854,17.2204,34.1549,0.686
 mass,XGBoost,0.9977,0.0059,0.0084,0.6
+stress,MLP Neural Network,0.9968,9.2951,15.8736,2.776
+mass,MLP Neural Network,0.9989,0.0042,0.0058,2.894
