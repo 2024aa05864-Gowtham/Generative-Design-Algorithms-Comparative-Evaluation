@@ -1,3 +1,3 @@
 target,model,R2,MAE,RMSE,train_time_sec
-stress,Random Forest,0.8785,44.0233,80.1946,0.555
-mass,Random Forest,0.9675,0.0229,0.0303,0.647
+stress,Random Forest,0.9618,26.911,55.1991,2.459
+mass,Random Forest,0.9953,0.0081,0.0121,2.537
