@@ -1,7 +1,12 @@
 """
-L-Bracket Parametric Dataset Generator (v2 - calibrated)
+L-Bracket Parametric Dataset Generator (v3 - expanded to 5000 samples)
 Uses analytical beam/bracket mechanics formulas to generate
 design variants for AIML surrogate model training.
+
+v3 change: N_SAMPLES increased from 600 -> 5000 (mid-sem evaluator
+feedback: "increase the dataset"). All formulas, bounds, and the LHS
+seed are unchanged from v2, so the two datasets are directly
+comparable -- only the sample count differs.
 """
 
 import numpy as np
@@ -24,7 +29,7 @@ MATERIALS = {
 LOWER_BOUNDS = [3.0, 30.0, 40.0, 1.0, 100.0]
 UPPER_BOUNDS = [10.0, 80.0, 100.0, 10.0, 1500.0]
 
-N_SAMPLES = 600
+N_SAMPLES = 5000
 
 # ----------------------------
 # 3. Latin Hypercube Sampling
