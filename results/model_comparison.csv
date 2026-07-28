@@ -1,7 +1,5 @@
 target,model,R2,MAE,RMSE,train_time_sec
-stress,Random Forest,0.8785,44.0233,80.1946,0.555
-mass,Random Forest,0.9675,0.0229,0.0303,0.647
-stress,XGBoost,0.9089,38.9026,69.4633,0.497
-mass,XGBoost,0.9867,0.0147,0.0194,0.469
-stress,MLP Neural Network,0.992,12.6955,20.6447,0.967
-mass,MLP Neural Network,0.9972,0.0066,0.0089,0.86
+stress,Random Forest,0.9618,26.911,55.1991,2.459
+mass,Random Forest,0.9953,0.0081,0.0121,2.537
+stress,XGBoost,0.9854,17.2204,34.1549,0.686
+mass,XGBoost,0.9977,0.0059,0.0084,0.6
