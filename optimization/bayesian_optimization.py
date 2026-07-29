@@ -1,14 +1,16 @@
 """
 Bayesian Optimization for L-Bracket
-Uses trained MLP surrogate models to find the lightest design
-that satisfies Factor of Safety >= 2.0
+Uses trained SVR surrogate models (best-performing surrogate, v2.0) to find
+the lightest design that satisfies Factor of Safety >= 2.0.
+
+v2.0 change: switched from MLP to SVR, since SVR outperformed MLP on the
+expanded 5000-sample dataset (stress R2: 0.9992 vs 0.9968; mass R2: 0.9999
+vs 0.9989 -- see results/model_comparison.csv).
 """
 
 import numpy as np
 import pandas as pd
 import joblib
-import torch
-import torch.nn as nn
 import time
 import optuna
 import warnings
@@ -17,33 +19,13 @@ warnings.filterwarnings("ignore", category=UserWarning)
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 # ----------------------------
-# 1. Load Scalers and Trained MLP Models
+# 1. Load Scalers and Trained SVR Models
 # ----------------------------
 feature_scaler = joblib.load("models/feature_scaler.pkl")
-target_scalers = joblib.load("models/target_scalers.pkl")
+svr_target_scalers = joblib.load("models/svr_target_scalers.pkl")
 
-class MLP(nn.Module):
-    def __init__(self, input_dim):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, 64),
-            nn.ReLU(),
-            nn.Dropout(0.1),
-            nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, 1)
-        )
-
-    def forward(self, x):
-        return self.net(x)
-
-stress_model = MLP(input_dim=6)
-stress_model.load_state_dict(torch.load("models/mlp_stress_model.pt"))
-stress_model.eval()
-
-mass_model = MLP(input_dim=6)
-mass_model.load_state_dict(torch.load("models/mlp_mass_model.pt"))
-mass_model.eval()
+stress_model = joblib.load("models/svr_stress_model.pkl")
+mass_model = joblib.load("models/svr_mass_model.pkl")
 
 YIELD_STRENGTH = {0: 250.0, 1: 215.0, 2: 95.0}
 LOAD_N = 1000.0
@@ -53,14 +35,12 @@ TARGET_FOS = 2.0
 def predict(thickness, width, arm_length, fillet_radius):
     features = np.array([[thickness, width, arm_length, fillet_radius, MATERIAL_ID, LOAD_N]])
     features_scaled = feature_scaler.transform(features)
-    features_t = torch.tensor(features_scaled, dtype=torch.float32)
 
-    with torch.no_grad():
-        stress_scaled = stress_model(features_t).item()
-        mass_scaled = mass_model(features_t).item()
+    stress_scaled = stress_model.predict(features_scaled)[0]
+    mass_scaled = mass_model.predict(features_scaled)[0]
 
-    s_mean, s_std = target_scalers["stress"]
-    m_mean, m_std = target_scalers["mass"]
+    s_mean, s_std = svr_target_scalers["stress"]
+    m_mean, m_std = svr_target_scalers["mass"]
 
     stress = stress_scaled * s_std + s_mean
     mass = mass_scaled * m_std + m_mean
@@ -87,7 +67,7 @@ def objective(trial):
 # ----------------------------
 # 3. Run Bayesian Optimization
 # ----------------------------
-N_TRIALS = 150  # same budget as GA's population x generations roughly
+N_TRIALS = 150
 
 study = optuna.create_study(direction="minimize", sampler=optuna.samplers.TPESampler(seed=42))
 
@@ -105,7 +85,7 @@ best_stress, best_mass = predict(best_thickness, best_width, best_arm, best_fill
 best_fos = YIELD_STRENGTH[MATERIAL_ID] / best_stress
 
 print("\n" + "="*50)
-print("BAYESIAN OPTIMIZATION - BEST DESIGN FOUND")
+print("BAYESIAN OPTIMIZATION (SVR surrogate) - BEST DESIGN FOUND")
 print("="*50)
 print(f"Thickness     : {best_thickness:.3f} mm")
 print(f"Width         : {best_width:.3f} mm")
