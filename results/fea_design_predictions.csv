@@ -1,0 +1,11 @@
+design_id,name,thickness_mm,width_mm,arm_length_mm,fillet_radius_mm,material,load_N,predicted_stress_MPa,predicted_mass_kg,predicted_fos
+D1,Baseline (typical safe),8.438,63.729,47.019,8.239,Stainless Steel,421.9,29.53,0.3445,7.281
+D2,GA Optimized (SVR),8.024,36.932,40.005,7.787,Mild Steel,1000.0,124.98,0.1599,2.0
+D3,Bayesian Optimized (SVR),9.171,35.774,40.095,2.428,Mild Steel,1000.0,124.48,0.1764,2.008
+D4,Conservative safe,9.5,70.0,50.0,8.0,Mild Steel,800.0,46.03,0.4439,5.431
+D5,Thin wall (expected failure),3.2,40.0,90.0,2.0,Mild Steel,1200.0,2195.35,0.1536,0.114
+D6,"Aluminium, GA dims",8.024,36.932,40.005,7.787,Aluminium,1000.0,127.03,0.0534,0.748
+D7,"Stainless Steel, GA dims",8.024,36.932,40.005,7.787,Stainless Steel,1000.0,127.11,0.1605,1.691
+D8,Large fillet,6.0,55.0,70.0,9.8,Mild Steel,900.0,223.33,0.3093,1.119
+D9,Small fillet,6.0,55.0,70.0,1.2,Mild Steel,900.0,310.97,0.3099,0.804
+D10,Medium balanced,6.5,55.0,70.0,5.5,Mild Steel,800.0,187.73,0.336,1.332
