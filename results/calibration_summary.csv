@@ -1,0 +1,2 @@
+calibration_factor,mean_raw_stress_error_pct,mean_calibrated_stress_error_pct,classification_mismatches_before,classification_mismatches_after,n_designs
+0.3563,181.25,5.0,5,0,10

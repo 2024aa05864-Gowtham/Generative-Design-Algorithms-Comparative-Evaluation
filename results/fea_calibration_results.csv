@@ -1,0 +1,11 @@
+design_id,name,thickness_mm,width_mm,arm_length_mm,fillet_radius_mm,material,load_N,predicted_stress_MPa,predicted_mass_kg,predicted_fos,fea_stress_MPa,fea_mass_kg,fea_deflection_mm,calibrated_stress_MPa,calibrated_fos,fea_fos,raw_classification,calibrated_classification,fea_classification,classification_match,raw_stress_error_pct,calibrated_stress_error_pct
+D1,Baseline (typical safe),8.438,63.729,47.019,8.239,Stainless Steel,421.9,29.53,0.316,7.281,10.889,0.315,0.006,10.52,20.437,19.745,Safe,Safe,Safe,True,171.19,3.39
+D2,GA Optimized (SVR),8.024,36.932,40.005,7.787,Mild Steel,1000.0,124.98,0.145,2.0,41.459,0.143,0.018,44.524,5.615,6.03,Safe,Safe,Safe,True,201.45,7.39
+D3,Bayesian Optimized (SVR),9.171,35.774,40.095,2.428,Mild Steel,1000.0,124.48,0.153,2.008,46.485,0.152,0.014,44.346,5.637,5.378,Safe,Safe,Safe,True,167.79,4.6
+D4,Conservative safe,9.5,70.0,50.0,8.0,Mild Steel,800.0,46.03,0.402,5.431,16.468,0.402,0.009,16.398,15.245,15.181,Safe,Safe,Safe,True,179.51,0.42
+D5,Thin wall (expected failure),3.2,40.0,90.0,2.0,Mild Steel,1200.0,2195.35,0.151,0.114,780.49,0.151,4.536,782.099,0.32,0.32,Fail,Fail,Fail,True,181.28,0.21
+D6,"Aluminium, GA dims",8.024,36.932,40.005,7.787,Aluminium,1000.0,127.03,0.048,0.748,41.459,0.049,0.051,45.255,2.099,2.291,Fail,Safe,Safe,True,206.4,9.16
+D7,"Stainless Steel, GA dims",8.024,36.932,40.005,7.787,Stainless Steel,1000.0,127.11,0.145,1.691,41.459,0.146,0.018,45.283,4.748,5.186,Marginal,Safe,Safe,True,206.59,9.22
+D8,Large fillet,6.0,55.0,70.0,9.8,Mild Steel,900.0,223.33,0.303,1.119,80.869,0.302,0.144,79.562,3.142,3.091,Marginal,Safe,Safe,True,176.16,1.62
+D9,Small fillet,6.0,55.0,70.0,1.2,Mild Steel,900.0,310.97,0.295,0.804,122.92,0.293,0.17,110.784,2.257,2.034,Fail,Safe,Safe,True,152.99,9.87
+D10,Medium balanced,6.5,55.0,70.0,5.5,Mild Steel,800.0,187.73,0.32,1.332,69.745,0.319,0.11,66.879,3.738,3.584,Marginal,Safe,Safe,True,169.17,4.11

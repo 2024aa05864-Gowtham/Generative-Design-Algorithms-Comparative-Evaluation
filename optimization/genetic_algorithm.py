@@ -7,6 +7,11 @@ v2.0 change: switched from MLP to SVR, since SVR outperformed MLP on the
 expanded 5000-sample dataset (stress R2: 0.9992 vs 0.9968; mass R2: 0.9999
 vs 0.9989 -- see results/model_comparison.csv). This keeps "the optimizer
 uses our best surrogate" true, not just claimed.
+
+v3.0 change: stress predictions are now corrected with the FEA-derived
+calibration factor (see calibrate_surrogate.py) before the FOS constraint
+is checked, so the optimizer no longer over-penalizes near-boundary
+designs the raw surrogate would have wrongly rejected.
 """
 
 import numpy as np
@@ -27,6 +32,12 @@ svr_target_scalers = joblib.load("models/svr_target_scalers.pkl")  # {"stress": 
 stress_model = joblib.load("models/svr_stress_model.pkl")
 mass_model = joblib.load("models/svr_mass_model.pkl")
 
+# v3.0: stress calibration factor, fit in calibrate_surrogate.py against
+# real ANSYS FEA results. Read from disk (not hardcoded) so the optimizer
+# always uses whatever calibrate_surrogate.py last computed.
+calibration_summary = pd.read_csv("results/calibration_summary.csv")
+STRESS_CALIBRATION_FACTOR = calibration_summary["calibration_factor"].iloc[0]
+
 YIELD_STRENGTH = {0: 250.0, 1: 215.0, 2: 95.0}  # MPa, by material_id
 LOAD_N = 1000.0   # fixed design load condition for optimization
 MATERIAL_ID = 0   # 0 = Mild Steel (fix material, optimize geometry)
@@ -45,6 +56,11 @@ def predict(thickness, width, arm_length, fillet_radius):
 
     stress = stress_scaled * s_std + s_mean
     mass = mass_scaled * m_std + m_mean
+
+    # v3.0: apply the FEA-derived calibration factor to correct the
+    # surrogate's systematic stress overprediction before it's used
+    # anywhere downstream (fitness function AND final reported result).
+    stress = stress * STRESS_CALIBRATION_FACTOR
 
     return stress, mass
 
